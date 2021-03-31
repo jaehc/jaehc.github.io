@@ -1,4 +1,12 @@
-# 하나의 이미지로 여러 개의 작은 이미지 동시에 출력하기 (텐서의 Transpose 연산)
+---
+title: "하나의 이미지에 여러 개의 작은 이미지들을 동시에 출력하기 (텐서의 Transpose 연산)"
+
+categories:
+    - 기타
+tags:
+    - reshape, tranpose, tensor
+use_math: true
+---
 
 
 코세라에 있는 엔드류 응 교수님의 딥러닝 강좌 중에 보면 여러 개의 작은 MNIST 이미지, 즉 숫자 이미지들을 하나의 큰 이미지로 합쳐서 출력하는 예제가 있다. 여러 개의 이미지 샘플을 눈으로 확인할 때 유용하다. 
@@ -111,12 +119,17 @@ Tranpose 결과를 이해하기 위해서 먼저 간단한 matrix의 tranpose를
 
 다음과 같이 matrix가 있다고 가정하자. 참고로 Matrix에서 행은 열보다 앞에 있는 Axes이다. 행은 Axes 번호가 0이고, 열은 1이다. tranpose를 하게 되면 하나의 열에 해당하는 행들은 해당 열의 하위로 들어가게 된다. 그리고 열들은 자신에게 속한 행들을 가지고 첫번째 Axes로 가기 때문에 결과 Matrix에서 행이 된다. 
 
-\begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{pmatrix}
+tranpose 이전,
+
+$
+\begin{pmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \end{pmatrix}
+$
 
 tranpose 이후,
 
-\begin{pmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6 \end{pmatrix}
-
+$
+\begin{pmatrix} 1 & 4 \\\\ 2 & 5 \\\\ 3 & 6 \end{pmatrix}
+$
 
 
 마찬가지로, 위의 이미지 Grid 예제에서 tranpose 이후 Axes의 순서가 바뀌게 되면, 기존에 앞에 있던 Axes의 모든 좌표들이 뒤에 있던 Axes의 각각 하나의 component 안으로 모두 들어가게 되고, 뒤에 있던 Axes의 각 component들은 앞에 있던 Axes의 완전한 세트를 가지게 된다. 이 때, swap이 되는 Axes를 제외한 다른 Axes들의 순서는 그대로 유지된다. 
