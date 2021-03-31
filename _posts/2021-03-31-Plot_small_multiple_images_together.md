@@ -180,9 +180,3 @@ plt.imshow(grid_img, cmap='gray');
 
 
 ![png](/images/Plot_small_multiple_images_together_files/Plot_small_multiple_images_together_17_0.png)
-
-
-
-```python
-
-```
