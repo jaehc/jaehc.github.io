@@ -4,16 +4,16 @@ title: "하나의 이미지에 여러 개의 작은 이미지들을 동시에 �
 categories:
     - 기타
 tags:
-    - reshape, tranpose, tensor
+    - reshape, transpose, tensor
 use_math: true
 ---
 
 
 코세라에 있는 엔드류 응 교수님의 딥러닝 강좌 중에 보면 여러 개의 작은 MNIST 이미지, 즉 숫자 이미지들을 하나의 큰 이미지로 합쳐서 출력하는 예제가 있다. 여러 개의 이미지 샘플을 눈으로 확인할 때 유용하다. 
 
-이 과정에서 4차원의 텐서(Tensor), 즉 4차원 배열을, 다루게 되는데, 텐서 조작을 위해서 reshape, tranpose를 사용한다. 때문에 해당 사례는 4차원의 텐서에서 해당 연산의 동작을 연습하기에 더 없이 좋은 예제가 아닐까 한다. 예제에서 사용하는 4차원의 텐서는 shape은 (이미지 행번호, 이미지 열번호, 이미지 세로 pixel 좌표, 이미지 가로 pixel 좌표) 이다. 여기서 이미지 행번호와 이미지 열번호는 여러 작은 이미지를 모아서 출력할 때, Grid 레이아웃을 만드는 데, 거기서의 행번호와 열번호이다.
+이 과정에서 4차원의 텐서(Tensor), 즉 4차원 배열을, 다루게 되는데, 텐서 조작을 위해서 reshape, transpose를 사용한다. 때문에 해당 사례는 4차원의 텐서에서 해당 연산의 동작을 연습하기에 더 없이 좋은 예제가 아닐까 한다. 예제에서 사용하는 4차원의 텐서는 shape은 (이미지 행번호, 이미지 열번호, 이미지 세로 pixel 좌표, 이미지 가로 pixel 좌표) 이다. 여기서 이미지 행번호와 이미지 열번호는 여러 작은 이미지를 모아서 출력할 때, Grid 레이아웃을 만드는 데, 거기서의 행번호와 열번호이다.
 
-참고로 2차원의 텐서, 즉 2차원 배열은 우리에게 친숙한 행렬 (Matrix) 이라고도 부르는데, 즉 행렬은 텐서의 특수한 경우라 볼 수 있다. 아무튼 3차원을 넘어가는 텐서를 다루는 게 좀 생소한데, 특히 4차원 이상의 텐서를 tranpose를 하면 많이 헷깔린다.
+참고로 2차원의 텐서, 즉 2차원 배열은 우리에게 친숙한 행렬 (Matrix) 이라고도 부르는데, 즉 행렬은 텐서의 특수한 경우라 볼 수 있다. 아무튼 3차원을 넘어가는 텐서를 다루는 게 좀 생소한데, 특히 4차원 이상의 텐서를 transpose를 하면 많이 헷깔린다.
 
 뭐 익숙해지면 별 거 아니겠지만, 여튼간 볼 때마다 새롭고, 잊을 만 하면 나오는 거라 이번에 해당 사례를 정리해볼까 한다. 
 
@@ -41,11 +41,11 @@ print(mnist.data.shape, mnist.target.shape)
     (70000, 784) (70000,)
 
 
-가져온 mnist 데이터에서 샘플로 100개의 인스턴스를 가져오자. 그 결과는 shape가 (100,784)인 텐서가 되는데, 이 것을 reshape 명령어를 통해서 shape가 (M, 28, 28)인 텐서로 전환할 수 있다. 참고로 reshape은 데이터를 바라보는 View만 변경할 뿐, 실제로 데이터를 옮기는 연산을 하지 않는다. tranpose도 마찬가지이다.
+가져온 mnist 데이터에서 샘플로 100개의 인스턴스를 가져오자. 그 결과는 shape가 (100,784)인 텐서가 되는데, 이 것을 reshape 명령어를 통해서 shape가 (M, 28, 28)인 텐서로 전환할 수 있다. 참고로 reshape은 데이터를 바라보는 View만 변경할 뿐, 실제로 데이터를 옮기는 연산을 하지 않는다. transpose도 마찬가지이다.
 
 두번째 명령어에서 trainX를 reshape할 시에 (-1, 28, 28)로 첫번째 Axis의 차원의 크기를 -1로 지정했는데, 이렇게 하면 Numpy가 자동으로 해당 Axis의 차원 크기를 결정해준다. 어떤 값을 사용할 지는 data buffer에 저장되어 있는 형태와 원하는 결과 shape에 따라 좌우된다. [Numpy에서 Buffer와 shape의 관계](https://stackoverflow.com/questions/22053050/difference-between-numpy-array-shape-r-1-and-r/22074424)
 
-세번째 명령어는 각 이미지를 (28, 28) 텐서로 만든 것을 다시 (784,)로 만들어 주고, tranpose를 한다. 그 결과 row 방향으로는 784개의 이미지 pixel이 나열되고, column 방향으로는 이미지 인스턴스가 나열된다.
+세번째 명령어는 각 이미지를 (28, 28) 텐서로 만든 것을 다시 (784,)로 만들어 주고, transpose를 한다. 그 결과 row 방향으로는 784개의 이미지 pixel이 나열되고, column 방향으로는 이미지 인스턴스가 나열된다.
 
 
 ```python
@@ -95,8 +95,8 @@ trainX1d는 (784, 100)의 shape을 가지고 있는데 이를 (28,28,10,10)으�
 
 
 ```python
-trainX2d_before_tranpose = trainX1d.reshape(28,28,10,10)
-print (trainX2d_before_tranpose.shape)
+trainX2d_before_transpose = trainX1d.reshape(28,28,10,10)
+print (trainX2d_before_transpose.shape)
 ```
 
     (28, 28, 10, 10)
@@ -104,33 +104,33 @@ print (trainX2d_before_tranpose.shape)
 
 이제 shape이 (28,28,10,10)인 텐서를 transpose해보자.
 
-tranpose에 전달하는 숫자값의 의미는 원래 텐서의 Axes의 번호를 말한다. 그리고 함수 호출 시에 나열한 인자의 순서에 따라서 tranpose한 후의 구조가 결정된다. 아래의 경우엔 tranpose(2,0,3,1)을 호출했는데, 그러면 다음과 같이 텐서 구조가 변경된다.
+transpose에 전달하는 숫자값의 의미는 원래 텐서의 Axes의 번호를 말한다. 그리고 함수 호출 시에 나열한 인자의 순서에 따라서 transpose한 후의 구조가 결정된다. 아래의 경우엔 transpose(2,0,3,1)을 호출했는데, 그러면 다음과 같이 텐서 구조가 변경된다.
 
-변경 전 shape은 (28, 28, 10, 10) => tranpose(2,0,3,1) => 변환 후 shape은 (10, 28, 10, 28)
+변경 전 shape은 (28, 28, 10, 10) => transpose(2,0,3,1) => 변환 후 shape은 (10, 28, 10, 28)
 * 1번째 Axe -> 2번째 Axe
 * 2번째 Axe -> 4번째 Axe
 * 3번째 Axe -> 1번째 Axe
 * 4번째 Axe -> 3번째 Axe
 
 
-Tranpose 결과를 이해하기 위해서 먼저 간단한 matrix의 tranpose를 살펴보자. 
+Transpose 결과를 이해하기 위해서 먼저 간단한 matrix의 transpose를 살펴보자. 
 
-다음과 같이 matrix가 있다고 가정하자. 참고로 Matrix에서 행은 열보다 앞에 있는 Axes이다. 행은 Axes 번호가 0이고, 열은 1이다. tranpose를 하게 되면 하나의 열에 해당하는 행들은 해당 열의 하위로 들어가게 된다. 그리고 열들은 자신에게 속한 행들을 가지고 첫번째 Axes로 가기 때문에 결과 Matrix에서 행이 된다. 
+다음과 같이 matrix가 있다고 가정하자. 참고로 Matrix에서 행은 열보다 앞에 있는 Axes이다. 행은 Axes 번호가 0이고, 열은 1이다. transpose를 하게 되면 하나의 열에 해당하는 행들은 해당 열의 하위로 들어가게 된다. 그리고 열들은 자신에게 속한 행들을 가지고 첫번째 Axes로 가기 때문에 결과 Matrix에서 행이 된다. 
 
-tranpose 이전,
+transpose 이전,
 
 $
 \begin{pmatrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \end{pmatrix}
 $
 
-tranpose 이후,
+transpose 이후,
 
 $
 \begin{pmatrix} 1 & 4 \\\\ 2 & 5 \\\\ 3 & 6 \end{pmatrix}
 $
 
 
-마찬가지로, 위의 이미지 Grid 예제에서 tranpose 이후 Axes의 순서가 바뀌게 되면, 기존에 앞에 있던 Axes의 모든 좌표들이 뒤에 있던 Axes의 각각 하나의 component 안으로 모두 들어가게 되고, 뒤에 있던 Axes의 각 component들은 앞에 있던 Axes의 완전한 세트를 가지게 된다. 이 때, swap이 되는 Axes를 제외한 다른 Axes들의 순서는 그대로 유지된다. 
+마찬가지로, 위의 이미지 Grid 예제에서 transpose 이후 Axes의 순서가 바뀌게 되면, 기존에 앞에 있던 Axes의 모든 좌표들이 뒤에 있던 Axes의 각각 하나의 component 안으로 모두 들어가게 되고, 뒤에 있던 Axes의 각 component들은 앞에 있던 Axes의 완전한 세트를 가지게 된다. 이 때, swap이 되는 Axes를 제외한 다른 Axes들의 순서는 그대로 유지된다. 
 
 따라서, 결과적으로, (10, 28, 10, 28) 텐서는 먼저 세로로 이미지 Grid의 행들이 나열되면서, 각 행들에는 이미지의 세로 Pixel의 전체 component의 범위가, 즉 0에서 255까지, 반복적으로 나열되게 되어, 그 결과 10 * 28개의 pixel이 만들어지게 된다. 그리고 세로로 만들어진 10 * 28개의 pixel의 한 점마다 하위에 (10, 28)의 텐서가 존재하는데, 이는 가로로 이미지 Grid의 행들이 나열되면서, 각 열들에는 이미지의 가로 Pixel의 전체 Component의 범위가 반복적으로 나열되게 된다. 
 
@@ -140,7 +140,7 @@ $
 
 
 ```python
-trainX2d_gridlayout = trainX2d_before_tranpose.transpose(2,0,3,1)
+trainX2d_gridlayout = trainX2d_before_transpose.transpose(2,0,3,1)
 print (trainX2d_gridlayout.shape)
 ```
 
@@ -158,7 +158,7 @@ print (grid_img.shape)
     (280, 280)
 
 
-결과 이미지가 출력해보자. 간단한 좌표변환으로 이와 같은 일을 할 수 있다는 것이 흥미롭다. Grid 이미지를 생성하는 데 루프를 전혀 이용하지 않았다. tranpose를 이용하지 않고 Naive하게 구현했다면 아마도 네 개의 for-loop 중첩을 사용하여 이미지를 생성했을 것이다. 
+결과 이미지가 출력해보자. 간단한 좌표변환으로 이와 같은 일을 할 수 있다는 것이 흥미롭다. Grid 이미지를 생성하는 데 루프를 전혀 이용하지 않았다. transpose를 이용하지 않고 Naive하게 구현했다면 아마도 네 개의 for-loop 중첩을 사용하여 이미지를 생성했을 것이다. 
 
 
 ```python
@@ -171,7 +171,7 @@ plt.imshow(grid_img, cmap='gray');
 ![png](/images/Plot_small_multiple_images_together_files/Plot_small_multiple_images_together_15_0.png)
 
 
-다음은 for-loop를 이용하여 수동으로 tranpose를 구현한 것이다. 위의 tranpose 함수를 이용할 때 사용한 Axes간의 맵핑이 인덱스 변수 p,q,i,j를 통해서 그대로 적용된다. 
+다음은 for-loop를 이용하여 수동으로 transpose를 구현한 것이다. 위의 transpose 함수를 이용할 때 사용한 Axes간의 맵핑이 인덱스 변수 p,q,i,j를 통해서 그대로 적용된다. 
 
 
 ```python
@@ -180,7 +180,7 @@ for p in range(28):
     for q in range(28):
         for i in range(10):
             for j in range(10):
-                grid_img[i*28+p,j*28+q] = trainX2d_before_tranpose[p,q,i,j]
+                grid_img[i*28+p,j*28+q] = trainX2d_before_transpose[p,q,i,j]
 
                 
 grid_img = grid_img.reshape(10*28,-1)
